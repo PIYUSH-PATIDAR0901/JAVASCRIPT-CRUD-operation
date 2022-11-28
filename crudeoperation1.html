@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>shoping list</h2>
+    <form action="">
+        <label for="items">add item : </label>
+        <input type="text" id="t1">
+        <input type="button" value="need" id="b1" onclick="need()">
+        <input type="button" value="have" id="b2" onclick="have()">
+    </form>
+
+    <h2>Need : </h2>
+    <ul id="prlist">
+        <li><input type="checkbox" name="item1" value=""><span>Tea</span> <button onclick="liedit(this)">Edit</button>
+            <button onclick="liremove(this)">Remove</button>
+        </li>
+
+    </ul>
+    <h2>Have : </h2>
+    <ul id="prlist1">
+        <li><input type="checkbox" name="item2" value="" checked><span>oil</span> <button
+                onclick="liedt(this)">Edit</button>
+            <button onclick="liremov(this)">Remove</button>
+        </li>
+    </ul>
+    <script>
+        let parenlist = document.getElementById('prlist')
+        function need(){
+            if(parenlist.children[0].className == "empmsg"){
+                parenlist.children[0].remove()
+            }
+            var inpt = document.getElementById('t1').value;
+            var addinpt = document.createElement('li');
+            addinpt.innerHTML = `<input type="checkbox" name="item1" value=""><span>${inpt}</span> <button onclick="liedit(this)">Edit</button>
+            <button onclick="liremove(this)">Remove</button>`;
+            parenlist.appendChild(addinpt)
+        }
+        function liremove(e){
+            e.parentElement.remove()
+            if(parenlist.children.length == 0){
+                let empmsg = document.createElement('h3')
+                empmsg.className = "empmsg"
+                empmsg.innerHTML = "Atlest add one item";
+                parenlist.appendChild(empmsg)
+            }
+        }
+
+        function liedit(element){
+            if(element.innerHTML == "Done"){
+                element.innerHTML = "Edit";
+                let updtitem = element.previousElementSibling.value;
+                let newitem = document.createElement('span');
+                newitem.innerHTML = updtitem;
+                element.parentElement.replaceChild(newitem, element.previousElementSibling);
+            } else{
+                element.innerHTML = "Done";
+                let updtitem = element.previousElementSibling.innerHTML;
+                let newitem = document.createElement('input');
+                newitem.type = 'text'
+                newitem.value = updtitem;
+                element.parentElement.replaceChild(newitem, element.previousElementSibling);
+            }
+        }
+
+        var parenList = document.getElementById('prlist1')
+
+        function have(){
+            var inpt = document.getElementById('t1').value;
+            var additem = document.createElement('li');
+            additem.innerHTML = `<input type="checkbox" name="item1" value=""><span>${inpt}</span> <button onclick="liedit(this)">Edit</button>
+            <button onclick="liremove(this)">Remove</button>`;
+            parenList.appendChild(additem)
+        }
+
+        function liremov(e){
+            e.parentElement.remove();
+        }
+
+        function liedt(element){
+            if(element.innerHTML = "Done"){
+                element.innerHTML = "Edit"
+                let updtitem = element.previousElementSibling.value;
+                let newitem = document.createElement("span");
+
+                newitem.innerHTML = updtitem;
+
+                element.parentElement.replaceChild(newitem,element.previousElementSibling)
+            } else{
+                element.innerHTML = "Done";
+                let updtitem = element.previousElementSibling.innerHTML;
+                let newitem = document.createElement("input");
+                newitem.type = "text"
+                newitem.value = updtitem;
+
+                element.parentElement.replaceChild(newitem,element.previousElementSibling)
+            }
+
+        }
+
+    </script>
+</body>
+</html>
