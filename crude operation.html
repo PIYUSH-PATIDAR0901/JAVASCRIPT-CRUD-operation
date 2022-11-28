@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
+    <title>Crude Operation</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar scroll</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Link
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled">Link</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success bg-danger" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+      <div class="container col-6 mt-5">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Chapter Name" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button id="add-item" class="btn btn-outline-success" type="button" id="button-addon2">Add</button>
+          </div>
+          <ul id="parentList" class="list-group">
+            <li class="list-group-item d-flex justify-content-between">
+               <h3 class="flex-grow-1"> Chapter-1</h3>
+                <button class="btn bg-warning mx-2" onclick="currEdit(this)">Edit</button>
+                <button class="btn bg-danger" onclick="currRemove(this)">Remove</button>
+            </li>
+          </ul>
+      </div>
+      <script>
+        let add = document.getElementById('add-item')
+        add.addEventListener('click', chapterName)
+        let parentList = document.getElementById('parentList')
+        function chapterName(e){
+            if(parentList.children[0].className == "emptyMsg"){
+                parentList.children[0].remove()
+            }
+            let currentBtn = e.currentTarget;
+            let currentInput = currentBtn.previousElementSibling
+
+            let currentChapterName = currentInput.value
+            let newLi = document.createElement('li')
+            // newLi.classList.add('list-group-item')
+            newLi.className = "list-group-item d-flex justify-content-between"
+            newLi.innerHTML = `<h3 class="flex-grow-1 "> ${currentChapterName}</h3>
+                <button class="btn bg-warning mx-2" onclick = "currEdit(this)">Edit</button>
+                <button class="btn bg-danger" onclick="currRemove(this)">Remove</button>`
+
+            parentList.appendChild(newLi)
+        }
+
+        function currRemove(currElement){
+            currElement.parentElement.remove()
+            let parentList = document.getElementById('parentList')
+            if(parentList.children.length <= 0){
+                let newEmpMsg = document.createElement('h3')
+                newEmpMsg.classList.add("emptyMsg")
+                newEmpMsg.textContent = "Nothing is here. Please add a chapter"
+                parentList.appendChild(newEmpMsg)
+            }
+        }
+
+        function currEdit(curreElement){
+          if(curreElement.textContent == "Done"){
+            curreElement.textContent = "Edit"
+            let currChapterName = curreElement.previousElementSibling.value
+            let curreHeading = document.createElement('h3')
+            curreHeading.className = 'flex-grow-1'
+            curreHeading.textContent = currChapterName
+            curreElement.parentElement.replaceChild(curreHeading, curreElement.previousElementSibling)
+          }else{
+            curreElement.textContent = "Done"
+            let currChapterName = curreElement.previousElementSibling.textContent
+            let currInput = document.createElement('input')
+            currInput.type = 'text'
+            currInput.className = 'form-control'
+            currInput.placeholder = 'Chapter Name'
+            currInput.value = currChapterName;
+
+            curreElement.parentElement.replaceChild(currInput, curreElement.previousElementSibling)
+          }
+           
+        }
+      </script>
+</body>
+</html>
